@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block content %}
+<div>
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>Дата</th>
+                <th>Сборник</th>
+                <th>Название</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for article in articles %}
+            <tr>
+                <td>{{ article['st_date'] }}</td>
+                <td>{{ article['st_compilation'] }}</td>
+                <td>
+                    <a href="{{ url_for('article', article_id=article['st_ID']) }}">
+                        {{ article['st_title'] }}
+                    </a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

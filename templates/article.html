@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block content %}
+<div>
+    <table class="table table-bordered table-sm">
+        <tr>
+            <td><a href="javascript:void(0);" onclick="history.back();">Назад к списку</a></td>
+            <td>Стих #{{ article['st_ID'] }}</td>
+            <td>Файл #{{ article['st_compilation'] }}</td>
+            <td>Дата: {{ article['st_date'] }}</td>
+            <td>
+                <a href="{{ url_for('article', article_id=article['st_ID']) }}?view=edit">Изменить</a>
+            </td>
+        </tr>
+    </table>
+    <h4>{{ article['st_title'] }}</h4>
+    <pre>{{ article['st_text'] }}</pre>
+    {% if article['st_notes'] %}
+        <h5>Заметки:</h5>
+        <pre>{{ article['st_notes'] }}</pre>
+    {% endif %}
+</div>
+{% endblock %}

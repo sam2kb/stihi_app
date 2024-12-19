@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block content %}
+<div>
+    <h4>Найденные дубликаты</h4>
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>Дата</th>
+                <th>Сборник</th>
+                <th>Название</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for duplicate in duplicates %}
+            <tr>
+                <td>{{ duplicate['st_date'] }}</td>
+                <td>{{ duplicate['st_compilation'] }}</td>
+                <td>
+                    <a href="{{ url_for('article', article_id=duplicate['st_ID']) }}">
+                        {{ duplicate['st_title'] }}
+                    </a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

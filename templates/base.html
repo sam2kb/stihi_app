@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>База стихов Татьяны Лавровой</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body { margin: 20px; }
+        .container { max-width: 800px; }
+        .form-group { margin-bottom: 10px !important; }
+        .meta { margin: 0 auto; }
+        pre {
+            font-size: 16px !important;
+            line-height: 24px !important;
+            font-family: Arial !important;
+            color: #333;
+            background: #eee;
+            padding: 5px 15px;
+            margin: 20px 0;
+        }
+        .table tbody tr td { padding: 0.25rem !important; }
+    </style>    
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <h2 class="text-center">База стихов Татьяны Лавровой</h2>
+            <div class="d-flex justify-content-center mt-3 mb-3">
+                <button type="button" class="btn btn-sm btn-primary mx-2" data-toggle="modal"
+                    data-target="#searchModal">
+                    Поиск по базе
+                </button>
+                <a href="/duplicates" class="btn btn-sm btn-secondary mx-2">
+                    Найти дупликаты
+                </a>
+            </div>
+        </header>
+
+        <!-- Search Modal -->
+        <div class="modal fade" id="searchModal" tabindex="-1" aria-labelledby="searchModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="searchModalLabel">Поиск по базе</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Закрыть">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <form method="POST" action="/">
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label for="query">Поиск</label>
+                                <input type="text" name="query" id="query" class="form-control"
+                                    placeholder="Введите текст для поиска" value="{{ query or '' }}">
+                            </div>
+                            <div class="form-group">
+                                <label>Где искать</label>
+                                <div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="target" value="title" id="title" 
+                                            {% if target == 'title' %}checked{% endif %}>
+                                        <label class="form-check-label" for="title">В названии</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="target" value="all" id="all" 
+                                            {% if target == 'all' or not target %}checked{% endif %}>
+                                        <label class="form-check-label" for="all">Везде</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="comp">Номер сборника:</label>
+                                <select name="comp" id="comp" class="form-control">
+                                    <option value="">Не важно</option>
+                                    {% for i in range(1, last_comp + 1) %}
+                                    <option value="{{ i }}" {% if comp == i|string %}selected{% endif %}>{{ i }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="year">Год написания:</label>
+                                <select name="year" id="year" class="form-control">
+                                    <option value="">Не важно</option>
+                                    <option value="2000" {% if year == '2000' %}selected{% endif %}>Дата неизвестна</option>
+                                    {% for y in years %}
+                                    <option value="{{ y }}" {% if year == y %}selected{% endif %}>{{ y }}</option>
+                                    {% endfor %}
+                                </select>
+                                
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-success">Искать</button>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        {% block content %}{% endblock %}
+    </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
+</html>
