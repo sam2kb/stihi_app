@@ -1,0 +1,5 @@
+old
+db.sqlite
+settings.json
+.venv
+.DS_Store
